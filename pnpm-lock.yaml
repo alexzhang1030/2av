@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@antfu/eslint-config-ts': ^0.38.6
+  async-validator: ^4.2.5
   bumpp: ^9.1.0
   eslint: ^8.40.0
   lint-staged: ^13.2.2
@@ -9,9 +10,14 @@ specifiers:
   tsup: ^6.7.0
   typescript: ^5.0.4
   vitest: ^0.31.0
+  zod: ^3.21.4
+
+dependencies:
+  zod: 3.21.4
 
 devDependencies:
   '@antfu/eslint-config-ts': 0.38.6_3qfatcekpgbllh6uk5ivyhkbxq
+  async-validator: 4.2.5
   bumpp: 9.1.0
   eslint: 8.40.0
   lint-staged: 13.2.2
@@ -772,6 +778,10 @@ packages:
   /astral-regex/2.0.0:
     resolution: {integrity: sha512-Z7tMw1ytTXt5jqMcOP+OQteU1VuNK9Y02uuJtKQ1Sv69jXQKKg5cibLwGJow8yzZP+eAc18EmLGPal0bp36rvQ==}
     engines: {node: '>=8'}
+    dev: true
+
+  /async-validator/4.2.5:
+    resolution: {integrity: sha512-7HhHjtERjqlNbZtqNqy2rckN/SpOOlmDliet+lP7k+eKZEjPk3DgyeU9lIXLdeLz0uBbbVp+9Qdow9wJWgwwfg==}
     dev: true
 
   /available-typed-arrays/1.0.5:
@@ -3738,3 +3748,7 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
     dev: true
+
+  /zod/3.21.4:
+    resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
+    dev: false

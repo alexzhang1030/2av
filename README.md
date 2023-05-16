@@ -1,13 +1,11 @@
-# lib-name
+# to-av
 
-lib-description
-
-replace `lib-name` and `lib-description` to real name and description.
+? to async-validator rules.
 
 ## Installation
 
 ```bash
-pnpm i lib-name
+pnpm i to-av
 ```
 
 ## License
