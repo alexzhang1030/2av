@@ -21,19 +21,92 @@ More examples, see [test cases](./src/__test__/)
 
 ## Usage
 
+### 1. Basic
+
 ```ts
 import { parse } from 'to-av'
 
-const rules = parse({
+const rules = parse(z.object({
   name: zod.string(),
   age: zod.number().optional(),
+}))
+```
+
+parsed to
+
+```ts
+const rules = {
+  name: {
+    required: true,
+    type: 'string',
+  },
+  age: {
+    required: false,
+    type: 'number',
+  },
+}
+```
+
+### 2. Deep rules
+
+```ts
+const rule = parse(z.object({
+  bar: z.number(),
+  foo: z.object({
+    bar: z.string(),
+  }),
+}))
+```
+
+parsed to
+
+```ts
+const rule = {
+  bar: {
+    required: true,
+    type: 'number',
+  },
+  foo: {
+    fields: {
+      bar: {
+        required: true,
+        type: 'string',
+      },
+    },
+    required: true,
+    type: 'object',
+  },
+}
+```
+
+### 3. Custom message
+
+```ts
+const rule = z.object({
+  name: z.string({
+    required_error: 'name 必填',
+  }),
+  age: z.number({
+    required_error: 'age 必填',
+  }),
 })
-/**
- * {
- *   name: { required: true },
- *   age: { required: false, type: 'number' },
- * }
- */
+```
+
+parsed to
+
+```ts
+const rules = {
+  age: {
+    message: 'age 必填',
+    required: true,
+    type: 'number',
+  },
+  name: {
+    message: 'name 必填',
+    required: true,
+    type: 'string',
+  },
+}
 ```
 
 ## Installation
