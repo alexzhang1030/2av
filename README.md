@@ -11,6 +11,8 @@ Support features:
 | `z.string` | `type: 'string'` | ✅ |
 | `z.number` | `type: 'number'` | ✅ | 
 | `z.array` | `type: 'array'` | ✅ |
+| `z.boolean` | `type: 'boolean'` | ✅ |
+| `z.date` | `type: 'date'` | ✅ |
 | `z.optional` | `required: false` | ✅ |
 | `z.min` | `min: number` | ❌ |
 

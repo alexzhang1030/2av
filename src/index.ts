@@ -1,13 +1,23 @@
-import { util, z } from 'zod'
+import type { z } from 'zod'
+import { ZodFirstPartyTypeKind, util } from 'zod'
 import type { RuleItem, Rules } from 'async-validator'
+import { zodIs } from './utils'
 
-function parseEachType(item: z.ZodTypeAny): RuleItem['type'] | null {
-  if (item instanceof z.ZodString)
-    return null
-  if (item instanceof z.ZodNumber)
-    return 'number'
-  if (item instanceof z.ZodArray)
-    return 'array'
+const typeMapping: [ZodFirstPartyTypeKind, RuleItem['type']][] = [
+  [ZodFirstPartyTypeKind.ZodString, 'string'],
+  [ZodFirstPartyTypeKind.ZodNumber, 'number'],
+  [ZodFirstPartyTypeKind.ZodObject, 'object'],
+  [ZodFirstPartyTypeKind.ZodArray, 'array'],
+  [ZodFirstPartyTypeKind.ZodBoolean, 'boolean'],
+  [ZodFirstPartyTypeKind.ZodDate, 'date'],
+]
+
+function determineType(item: ZodFirstPartyTypeKind): RuleItem['type'] {
+  for (const [shape, target] of typeMapping) {
+    if (item === shape)
+      return target
+  }
+  return 'any'
 }
 
 function parseItem(item: z.ZodTypeAny): RuleItem {
@@ -18,11 +28,17 @@ function parseItem(item: z.ZodTypeAny): RuleItem {
     required: !optional,
   } as RuleItem
 
-  if (item instanceof z.ZodOptional) {
-    const _type = item._def.innerType
-    const parsedType = parseEachType(_type)
-    if (parsedType)
-      result.type = parsedType
+  let zodType = item._def.typeName
+
+  if (zodType === ZodFirstPartyTypeKind.ZodOptional)
+    zodType = item._def.innerType._def.typeName
+
+  result.type = determineType(zodType)
+
+  if (zodIs.object(zodType, item)) {
+    result.fields = {
+      ...parse(item),
+    }
   }
 
   return result
@@ -39,6 +55,5 @@ export function parse<T extends z.ZodRawShape>(schema: z.ZodObject<T>): Rules {
     const item = shape[key]
     rules[key] = parseItem(item)
   }
-
   return rules
 }
