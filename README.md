@@ -17,6 +17,8 @@ Support features:
 | `z.object` | `type: 'object'` with `deep rules` | ✅ |
 | `z.min` | `min: number` | ❌ |
 
+More examples, see [test cases](./src/__test__/)
+
 ## Usage
 
 ```ts

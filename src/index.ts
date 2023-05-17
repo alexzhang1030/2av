@@ -30,16 +30,13 @@ function parseItem(item: z.ZodTypeAny): RuleItem {
 
   let zodType = item._def.typeName
 
-  if (zodType === ZodFirstPartyTypeKind.ZodOptional)
+  if (zodIs.optional(zodType, item))
     zodType = item._def.innerType._def.typeName
 
   result.type = determineType(zodType)
 
-  if (zodIs.object(zodType, item)) {
-    result.fields = {
-      ...parse(item),
-    }
-  }
+  if (zodIs.object(zodType, item))
+    result.fields = parse(item)
 
   return result
 }
