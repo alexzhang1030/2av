@@ -6,10 +6,18 @@ test('custom message', () => {
     name: z.string({
       required_error: 'name 必填',
     }),
+    age: z.number({
+      required_error: 'age 必填',
+    }),
   })
-  inTestScope(rule, { }, (avRules, errors) => {
+  inTestScope(rule, { age: 1 }, (avRules, errors) => {
     expect(avRules).toMatchInlineSnapshot(`
       {
+        "age": {
+          "message": "age 必填",
+          "required": true,
+          "type": "number",
+        },
         "name": {
           "message": "name 必填",
           "required": true,
