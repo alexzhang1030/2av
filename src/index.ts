@@ -1,19 +1,11 @@
-import type { z } from 'zod'
-import { ZodFirstPartyTypeKind, util } from 'zod'
+import type { ZodFirstPartyTypeKind, z } from 'zod'
+import { util } from 'zod'
 import type { RuleItem, Rules } from 'async-validator'
 import { zodIs } from './utils'
-
-const typeMapping: [ZodFirstPartyTypeKind, RuleItem['type']][] = [
-  [ZodFirstPartyTypeKind.ZodString, 'string'],
-  [ZodFirstPartyTypeKind.ZodNumber, 'number'],
-  [ZodFirstPartyTypeKind.ZodObject, 'object'],
-  [ZodFirstPartyTypeKind.ZodArray, 'array'],
-  [ZodFirstPartyTypeKind.ZodBoolean, 'boolean'],
-  [ZodFirstPartyTypeKind.ZodDate, 'date'],
-]
+import { TYPE_MAPPING } from './constant'
 
 function determineType(item: ZodFirstPartyTypeKind): RuleItem['type'] {
-  for (const [shape, target] of typeMapping) {
+  for (const [shape, target] of TYPE_MAPPING) {
     if (item === shape)
       return target
   }
