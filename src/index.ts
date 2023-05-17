@@ -12,6 +12,12 @@ function determineType(item: ZodFirstPartyTypeKind): RuleItem['type'] {
   return 'any'
 }
 
+function determineMessage(item: z.ZodTypeAny) {
+  const customError = item._def.errorMap?.({ code: 'invalid_type' }, { data: undefined })
+  if (customError)
+    return customError.message
+}
+
 function parseItem(item: z.ZodTypeAny): RuleItem {
   const optional = item.isOptional()
 
@@ -19,6 +25,10 @@ function parseItem(item: z.ZodTypeAny): RuleItem {
     type: 'string',
     required: !optional,
   } as RuleItem
+
+  const message = determineMessage(item)
+  if (message)
+    result.message = message
 
   let zodType = item._def.typeName
 
