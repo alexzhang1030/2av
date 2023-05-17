@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { parse } from '..'
+import { inTestScope } from './fixtures/util'
 
 test('z.object', () => {
   const rule = z.object({
@@ -8,22 +8,38 @@ test('z.object', () => {
       bar: z.string(),
     }),
   })
-  expect(parse(rule)).toMatchInlineSnapshot(`
-    {
-      "bar": {
-        "required": true,
-        "type": "number",
-      },
-      "foo": {
-        "fields": {
-          "bar": {
-            "required": true,
-            "type": "string",
-          },
+  inTestScope(rule, { bar: '1', foo: { bar: 1 } }, (avRules, errors) => {
+    expect(avRules).toMatchInlineSnapshot(`
+      {
+        "bar": {
+          "required": true,
+          "type": "number",
         },
-        "required": true,
-        "type": "object",
-      },
-    }
-  `)
+        "foo": {
+          "fields": {
+            "bar": {
+              "required": true,
+              "type": "string",
+            },
+          },
+          "required": true,
+          "type": "object",
+        },
+      }
+    `)
+    expect(errors).toMatchInlineSnapshot(`
+      [
+        {
+          "field": "bar",
+          "fieldValue": "1",
+          "message": "bar is not a number",
+        },
+        {
+          "field": "foo.bar",
+          "fieldValue": 1,
+          "message": "foo.bar is not a string",
+        },
+      ]
+    `)
+  })
 })

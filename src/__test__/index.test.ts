@@ -1,6 +1,5 @@
 import { z } from 'zod'
-import Schema from 'async-validator'
-import { parse } from '..'
+import { inTestScope } from './fixtures/util'
 
 test('easy parse', () => {
   const rules = z.object({
@@ -14,61 +13,54 @@ test('easy parse', () => {
     }),
   })
 
-  const avRules = parse(rules)
-
-  expect(avRules).toMatchInlineSnapshot(`
-    {
-      "age": {
-        "required": false,
-        "type": "number",
-      },
-      "birth": {
-        "required": false,
-        "type": "date",
-      },
-      "contact": {
-        "fields": {
-          "age": {
-            "required": false,
-            "type": "number",
-          },
-          "name": {
-            "required": true,
-            "type": "string",
-          },
+  inTestScope(rules, { name: 'foo', age: '2' }, (avRules, errors) => {
+    expect(avRules).toMatchInlineSnapshot(`
+      {
+        "age": {
+          "required": false,
+          "type": "number",
         },
-        "required": true,
-        "type": "object",
-      },
-      "locations": {
-        "required": false,
-        "type": "array",
-      },
-      "name": {
-        "required": true,
-        "type": "string",
-      },
-    }
-  `)
-
-  const validator = new Schema(avRules)
-
-  validator.validate({ name: 'foo', age: '2' }, (errors) => {
-    if (errors) {
-      expect(errors).toMatchInlineSnapshot(`
-        [
-          {
-            "field": "age",
-            "fieldValue": "2",
-            "message": "age is not a number",
+        "birth": {
+          "required": false,
+          "type": "date",
+        },
+        "contact": {
+          "fields": {
+            "age": {
+              "required": false,
+              "type": "number",
+            },
+            "name": {
+              "required": true,
+              "type": "string",
+            },
           },
-          {
-            "field": "contact",
-            "fieldValue": undefined,
-            "message": "contact is required",
-          },
-        ]
-      `)
-    }
+          "required": true,
+          "type": "object",
+        },
+        "locations": {
+          "required": false,
+          "type": "array",
+        },
+        "name": {
+          "required": true,
+          "type": "string",
+        },
+      }
+    `)
+    expect(errors).toMatchInlineSnapshot(`
+      [
+        {
+          "field": "age",
+          "fieldValue": "2",
+          "message": "age is not a number",
+        },
+        {
+          "field": "contact",
+          "fieldValue": undefined,
+          "message": "contact is required",
+        },
+      ]
+    `)
   })
 })
