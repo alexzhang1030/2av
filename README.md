@@ -26,10 +26,11 @@ More examples, see [test cases](./src/__test__/)
 
 ```ts
 import { parse } from 'to-av'
+import { z } from 'zod'
 
 const rules = parse(z.object({
-  name: zod.string(),
-  age: zod.number().optional(),
+  name: z.string(),
+  age: z.number().optional(),
 }))
 ```
 
@@ -37,53 +38,75 @@ parsed to
 
 ```ts
 const rules = {
-  name: [{
-    required: true,
-    type: 'string',
-  }],
-  age: [{
-    required: false,
-    type: 'number',
-  }],
+  age: [
+    {
+      required: false,
+    },
+    {
+      type: 'number',
+    },
+  ],
+  name: [
+    {
+      required: true,
+    },
+    {
+      type: 'string',
+    },
+  ],
 }
 ```
 
 ### 2. Deep rules
 
 ```ts
-const rule = parse(z.object({
+const rule = z.object({
   bar: z.number(),
   foo: z.object({
     bar: z.string(),
   }),
-}))
+})
 ```
 
 parsed to
 
 ```ts
 const rule = {
-  bar: [{
-    required: true,
-    type: 'number',
-  }],
-  foo: [{
-    fields: {
-      bar: {
-        required: true,
-        type: 'string',
-      },
+  bar: [
+    {
+      required: true,
     },
-    required: true,
-    type: 'object',
-  }],
+    {
+      type: 'number',
+    },
+  ],
+  foo: [
+    {
+      required: true,
+    },
+    {
+      fields: {
+        bar: [
+          {
+            required: true,
+          },
+          {
+            type: 'string',
+          },
+        ],
+      },
+      type: 'object',
+    },
+  ],
 }
 ```
 
 ### 3. Custom message
 
+#### 3.1 required
+
 ```ts
-const rule = z.object({
+const rules = z.object({
   name: z.string({
     required_error: 'name 必填',
   }),
@@ -97,16 +120,24 @@ parsed to
 
 ```ts
 const rules = {
-  age: [{
-    message: 'age 必填',
-    required: true,
-    type: 'number',
-  }],
-  name: [{
-    message: 'name 必填',
-    required: true,
-    type: 'string',
-  }],
+  age: [
+    {
+      message: 'age 必填',
+      required: true,
+    },
+    {
+      type: 'number',
+    },
+  ],
+  name: [
+    {
+      message: 'name 必填',
+      required: true,
+    },
+    {
+      type: 'string',
+    },
+  ],
 }
 ```
 
@@ -123,18 +154,30 @@ parsed to
 
 ```ts
 const rule = {
-  age: {
-    max: 100,
-    min: 18,
-    required: true,
-    type: 'number',
-  },
-  name: {
-    max: 10,
-    min: 2,
-    required: true,
-    type: 'string',
-  },
+  age: [
+    {
+      required: true,
+    },
+    {
+      type: 'number',
+    },
+    {
+      max: 100,
+      min: 18,
+    },
+  ],
+  name: [
+    {
+      required: true,
+    },
+    {
+      type: 'string',
+    },
+    {
+      max: 10,
+      min: 2,
+    },
+  ],
 }
 ```
 
