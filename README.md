@@ -15,7 +15,8 @@ Support features:
 | `z.date` | `type: 'date'` | ✅ |
 | `z.optional` | `required: false` | ✅ |
 | `z.object` | `type: 'object'` with `deep rules` | ✅ |
-| `z.min` | `min: number` | ❌ |
+| `z.min` | `min: number` | ✅ |
+| `z.max` | `max: number` | ✅ |
 
 More examples, see [test cases](./src/__test__/)
 
@@ -103,6 +104,34 @@ const rules = {
   },
   name: {
     message: 'name 必填',
+    required: true,
+    type: 'string',
+  },
+}
+```
+
+### 4. range
+
+```ts
+const rule = z.object({
+  name: z.string().min(2).max(10),
+  age: z.number().min(18).max(100),
+})
+```
+
+parsed to
+
+```ts
+const rule = {
+  age: {
+    max: 100,
+    min: 18,
+    required: true,
+    type: 'number',
+  },
+  name: {
+    max: 10,
+    min: 2,
     required: true,
     type: 'string',
   },
