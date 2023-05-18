@@ -20,9 +20,7 @@ export const zodIs = {
 }
 
 export function isValidNumber(value: unknown): value is number {
-  if (typeof value !== 'number')
-    return false
-  return !Number.isNaN(value)
+  return !(typeof value !== 'number' || Number.isNaN(value))
 }
 
 export function removeEmptyRecordItem<T extends object>(record: T[]): T[] {
