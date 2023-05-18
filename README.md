@@ -37,14 +37,14 @@ parsed to
 
 ```ts
 const rules = {
-  name: {
+  name: [{
     required: true,
     type: 'string',
-  },
-  age: {
+  }],
+  age: [{
     required: false,
     type: 'number',
-  },
+  }],
 }
 ```
 
@@ -63,11 +63,11 @@ parsed to
 
 ```ts
 const rule = {
-  bar: {
+  bar: [{
     required: true,
     type: 'number',
-  },
-  foo: {
+  }],
+  foo: [{
     fields: {
       bar: {
         required: true,
@@ -76,7 +76,7 @@ const rule = {
     },
     required: true,
     type: 'object',
-  },
+  }],
 }
 ```
 
@@ -97,16 +97,16 @@ parsed to
 
 ```ts
 const rules = {
-  age: {
+  age: [{
     message: 'age 必填',
     required: true,
     type: 'number',
-  },
-  name: {
+  }],
+  name: [{
     message: 'name 必填',
     required: true,
     type: 'string',
-  },
+  }],
 }
 ```
 

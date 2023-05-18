@@ -22,9 +22,8 @@ export function produceGroup(item: ZodTypeAny) {
   }
 
   return {
-    type() {
+    required() {
       const rule = produceRule({
-        type: 'string',
         required: !optional,
       })
       // get required custom messages
@@ -33,10 +32,16 @@ export function produceGroup(item: ZodTypeAny) {
         if (message)
           rule.message = message
       }
+      return rule
+    },
+    type() {
+      const rule = produceRule({
+        type: 'string',
+      })
+
       // determine type
       if (zodIs.optional(zodType, item))
         zodType = item._def.innerType._def.typeName
-
       rule.type = determineType(zodType)
 
       // move deep rules to determine type

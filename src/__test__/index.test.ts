@@ -19,44 +19,58 @@ test('easy parse', () => {
         "age": [
           {
             "required": false,
+          },
+          {
             "type": "number",
           },
         ],
         "birth": [
           {
             "required": false,
+          },
+          {
             "type": "date",
           },
         ],
         "contact": [
           {
+            "required": true,
+          },
+          {
             "fields": {
               "age": [
                 {
                   "required": false,
+                },
+                {
                   "type": "number",
                 },
               ],
               "name": [
                 {
                   "required": true,
+                },
+                {
                   "type": "string",
                 },
               ],
             },
-            "required": true,
             "type": "object",
           },
         ],
         "locations": [
           {
             "required": false,
+          },
+          {
             "type": "array",
           },
         ],
         "name": [
           {
             "required": true,
+          },
+          {
             "type": "string",
           },
         ],

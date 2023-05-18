@@ -17,6 +17,8 @@ test('range check', () => {
           "foo1": [
             {
               "required": true,
+            },
+            {
               "type": "string",
             },
             {
@@ -27,6 +29,8 @@ test('range check', () => {
           "foo2": [
             {
               "required": true,
+            },
+            {
               "type": "string",
             },
             {
@@ -37,6 +41,8 @@ test('range check', () => {
             {
               "message": "foo3 必填",
               "required": true,
+            },
+            {
               "type": "string",
             },
             {

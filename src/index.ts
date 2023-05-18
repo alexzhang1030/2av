@@ -7,6 +7,7 @@ import { removeEmptyRecordItem } from './utils'
 function parseItem(item: ZodTypeAny): RuleItem[] {
   const group = produceGroup(item)
   const rules: RuleItem[] = removeEmptyRecordItem([
+    group.required(),
     group.type(),
     group.range(),
   ])

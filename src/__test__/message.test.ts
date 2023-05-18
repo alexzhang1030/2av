@@ -16,6 +16,8 @@ test('custom message', () => {
         "age": [
           {
             "required": false,
+          },
+          {
             "type": "number",
           },
         ],
@@ -23,6 +25,8 @@ test('custom message', () => {
           {
             "message": "name 必填",
             "required": true,
+          },
+          {
             "type": "string",
           },
         ],
