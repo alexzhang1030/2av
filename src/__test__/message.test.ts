@@ -13,15 +13,19 @@ test('custom message', () => {
   inTestScope(rule, { age: 1 }, (avRules, errors) => {
     expect(avRules).toMatchInlineSnapshot(`
       {
-        "age": {
-          "required": false,
-          "type": "number",
-        },
-        "name": {
-          "message": "name 必填",
-          "required": true,
-          "type": "string",
-        },
+        "age": [
+          {
+            "required": false,
+            "type": "number",
+          },
+        ],
+        "name": [
+          {
+            "message": "name 必填",
+            "required": true,
+            "type": "string",
+          },
+        ],
       }
     `)
     expect(errors).toMatchInlineSnapshot(`

@@ -24,3 +24,7 @@ export function isValidNumber(value: unknown): value is number {
     return false
   return !Number.isNaN(value)
 }
+
+export function removeEmptyRecordItem<T extends object>(record: T[]): T[] {
+  return record.filter(item => Object.keys(item).length)
+}

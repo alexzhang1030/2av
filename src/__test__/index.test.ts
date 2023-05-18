@@ -16,36 +16,50 @@ test('easy parse', () => {
   inTestScope(rules, { name: 'foo', age: '2' }, (avRules, errors) => {
     expect(avRules).toMatchInlineSnapshot(`
       {
-        "age": {
-          "required": false,
-          "type": "number",
-        },
-        "birth": {
-          "required": false,
-          "type": "date",
-        },
-        "contact": {
-          "fields": {
-            "age": {
-              "required": false,
-              "type": "number",
-            },
-            "name": {
-              "required": true,
-              "type": "string",
-            },
+        "age": [
+          {
+            "required": false,
+            "type": "number",
           },
-          "required": true,
-          "type": "object",
-        },
-        "locations": {
-          "required": false,
-          "type": "array",
-        },
-        "name": {
-          "required": true,
-          "type": "string",
-        },
+        ],
+        "birth": [
+          {
+            "required": false,
+            "type": "date",
+          },
+        ],
+        "contact": [
+          {
+            "fields": {
+              "age": [
+                {
+                  "required": false,
+                  "type": "number",
+                },
+              ],
+              "name": [
+                {
+                  "required": true,
+                  "type": "string",
+                },
+              ],
+            },
+            "required": true,
+            "type": "object",
+          },
+        ],
+        "locations": [
+          {
+            "required": false,
+            "type": "array",
+          },
+        ],
+        "name": [
+          {
+            "required": true,
+            "type": "string",
+          },
+        ],
       }
     `)
     expect(errors).toMatchInlineSnapshot(`

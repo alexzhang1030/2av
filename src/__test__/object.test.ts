@@ -11,20 +11,26 @@ test('z.object', () => {
   inTestScope(rule, { bar: '1', foo: { bar: 1 } }, (avRules, errors) => {
     expect(avRules).toMatchInlineSnapshot(`
       {
-        "bar": {
-          "required": true,
-          "type": "number",
-        },
-        "foo": {
-          "fields": {
-            "bar": {
-              "required": true,
-              "type": "string",
-            },
+        "bar": [
+          {
+            "required": true,
+            "type": "number",
           },
-          "required": true,
-          "type": "object",
-        },
+        ],
+        "foo": [
+          {
+            "fields": {
+              "bar": [
+                {
+                  "required": true,
+                  "type": "string",
+                },
+              ],
+            },
+            "required": true,
+            "type": "object",
+          },
+        ],
       }
     `)
     expect(errors).toMatchInlineSnapshot(`
