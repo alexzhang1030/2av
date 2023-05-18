@@ -31,9 +31,11 @@ function parseItem(item: z.ZodTypeAny): RuleItem {
     required: !optional,
   } as RuleItem
 
-  const message = determineMessage(item)
-  if (message)
-    result.message = message
+  if (!optional) {
+    const message = determineMessage(item)
+    if (message)
+      result.message = message
+  }
 
   let zodType = item._def.typeName
 
