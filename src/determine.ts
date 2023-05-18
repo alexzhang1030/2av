@@ -32,8 +32,8 @@ export function determineRange(item: ZodTypeAny, zodType: ZodFirstPartyTypeKind)
 
 export const determineMessage = {
   required(item: ZodTypeAny) {
-  // Because zod does not provide a way to get the error message of the current item,
-  // we can only get the error message of the current item through the errorMap function.
+    // Because zod does not provide a way to get the error message of the current item,
+    // we can only get the error message of the current item through the errorMap function.
 
     // We use `errorMap?.({ code: 'invalid_type' }, { data: undefined })` to get
     // user custom defined `required_error`, you could see ./src/__test__/message.test.ts for more details.
