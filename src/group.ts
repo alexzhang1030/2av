@@ -34,7 +34,6 @@ export function produceGroup(item: ZodTypeAny) {
           rule.message = message
       }
       // determine type
-
       if (zodIs.optional(zodType, item))
         zodType = item._def.innerType._def.typeName
 
