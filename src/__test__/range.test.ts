@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { inTestScope } from './fixtures/util'
 
-test('ranger check', () => {
+test('range check', () => {
   const rule = z.object({
     foo1: z.string().min(2).max(4),
     foo2: z.string().min(2),
